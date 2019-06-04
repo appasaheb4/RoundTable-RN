@@ -54,7 +54,7 @@ export default class LaunchingScreen extends Component<Props, any> {
                     source={ images.appBackgound }
                     style={ styles.backgroundImage }
                     imageStyle={ {
-                        resizeMode: "contain" // works only here!
+                        resizeMode: "stretch" // works only here!
                     } }
                 >
                 </ImageBackground>
