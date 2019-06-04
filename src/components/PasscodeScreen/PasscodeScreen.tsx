@@ -93,7 +93,7 @@ export default class PasscodeScreen extends Component<any, any> {
                         <Text
                             style={ [ { color: "#000000", marginTop: 20 } ] }
                         >
-                            Hello, Crypto wizard
+                            Round Table
             </Text>
                     </View>
                     <View style={ styles.viewPasscode }>

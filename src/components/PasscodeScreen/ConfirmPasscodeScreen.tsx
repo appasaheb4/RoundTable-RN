@@ -110,9 +110,9 @@ export default class ConfirmPasscodeScreen extends Component<any, any> {
                     <View style={ styles.viewAppLogo }>
                         <Image style={ styles.imgAppLogo } source={ images.logo } />
                         <Text
-                            style={ [ { color: "#000000", marginTop: 20 } ] }
+                            style={ [ { color: colors.appColor, marginTop: 20 } ] }
                         >
-                            Hello
+                            Round Table
             </Text>
                     </View>
                     <View style={ styles.viewFirstPasscode }>

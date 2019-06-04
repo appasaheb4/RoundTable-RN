@@ -12,6 +12,7 @@ import PasscodeScreen from "RoundTable/src/components/PasscodeScreen/PasscodeScr
 
 //TODO: Tabbar 
 import HomeScreen from "RoundTable/src/components/TabbarScreen/HomeScreen/HomeScreen";
+import SettingScreen from "RoundTable/src/components/TabbarScreen/SettingScreen/SettingScreen";
 
 
 //TODO: StackNavigator
@@ -46,6 +47,16 @@ const TabNavigator = createBottomTabNavigator(
                 tabBarLabel: "Home", //localization("TabBarItem.Payment"),
                 tabBarIcon: ( { tintColor } ) => (
                     <Icon name="home" color={ tintColor } size={ 22 } />
+                ),
+
+            }
+        },
+        SettingScreen: {
+            screen: SettingScreen, //PaymentScreen,
+            navigationOptions: {
+                tabBarLabel: "Setting", //localization("TabBarItem.Payment"),
+                tabBarIcon: ( { tintColor } ) => (
+                    <Icon name="cog" color={ tintColor } size={ 22 } />
                 ),
 
             }

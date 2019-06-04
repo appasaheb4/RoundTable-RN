@@ -20,7 +20,8 @@ var images = {
 };
 
 var asyncStorageKeys = {
-  flag_Pincode: "flag_Pincode"
+  flag_Pincode: "flag_Pincode",
+  selectDeiceInfo: "selectDeiceInfo"
 }
 
 export {

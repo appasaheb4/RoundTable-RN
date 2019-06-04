@@ -46,7 +46,6 @@ export default class LaunchingScreen extends Component<Props, any> {
     }
 
     render() {
-        const animatedOpcity = { opacity: this.state.centerLogoOpticy }
         return (
             <View style={ styles.container }>
                 <StatusBar hidden />
