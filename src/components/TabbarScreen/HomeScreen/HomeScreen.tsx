@@ -9,6 +9,7 @@ import {
     SensorTypes
 } from "react-native-sensors";
 import { map, filter } from "rxjs/operators";
+var io = require( "socket.io-client/dist/socket.io" );
 
 //TODO: Custome Compontes
 import ModelTotalDevices from 'RoundTable/src/app/custcompontes/Model/ModelTotalDevices/ModelTotalDevices';
@@ -27,6 +28,8 @@ export default class HomeScreen extends Component<Props, any> {
             z: 0,
             arr_ModelTotalDevices: []
         } )
+        this.socket = io( 'http://round.cmshuawei.com:80', { jsonp: false } );
+
     }
     async componentDidMount() {
         let selectDeiceInfo = await AsyncStorage.getItem( asyncStorageKeys.selectDeiceInfo );
@@ -45,9 +48,20 @@ export default class HomeScreen extends Component<Props, any> {
             this.setState( {
                 x, y, z
             } )
+            if ( z <= 2 ) {
+                this.socket.emit( 'videoPlay', 'Hello world!' );
+                console.log( 'call' );
+
+            } else {
+                console.log( 'dont call' );
+            }
         }
         );
-        setUpdateIntervalForType( SensorTypes.accelerometer, 500 );
+        setUpdateIntervalForType( SensorTypes.accelerometer, 1000 );
+    }
+
+    emit() {
+        this.socket.send( "videoPlay" )
     }
 
     //TODO:  click_SelectItem

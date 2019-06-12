@@ -17,21 +17,22 @@ import SettingScreen from "RoundTable/src/components/TabbarScreen/SettingScreen/
 
 //TODO: StackNavigator
 //TODO: StackNavigator:ONBoarding
-const OnBoardingStackNavigator = createStackNavigator(
-    {
-        ConfirmPasscodeScreen: {
-            screen: ConfirmPasscodeScreen,
-            navigationOptions: { header: null }
-        },
-        PasscodeScreen: {
-            screen: PasscodeScreen,
-            navigationOptions: { header: null }
-        }
-    },
-    {
-        initialRouteName: "ConfirmPasscodeScreen"
-    }
-);
+
+// const OnBoardingStackNavigator = createStackNavigator(
+//     {
+//         ConfirmPasscodeScreen: {
+//             screen: ConfirmPasscodeScreen,
+//             navigationOptions: { header: null }
+//         },
+//         PasscodeScreen: {
+//             screen: PasscodeScreen,
+//             navigationOptions: { header: null }
+//         }
+//     },
+//     {
+//         initialRouteName: "ConfirmPasscodeScreen"
+//     }
+// );
 
 
 
