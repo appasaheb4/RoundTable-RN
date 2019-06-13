@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Modal, TouchableOpacity, View, Alert, StyleSheet, FlatList } from 'react-native';
 import { Button, Icon, Text, Textarea, Form } from "native-base";
 import { RkCard } from "react-native-ui-kitten";
+import DeviceInfo from "react-native-device-info";
+import axios from "axios";
 
 interface Props {
     data: [];
@@ -10,6 +12,9 @@ interface Props {
     pop: Function;
     click_Request: Function
 }
+
+//TODO:  Custome Object
+import { apiary } from "RoundTable/src/app/constant/Constants";
 
 export default class ModelTotalDevices extends Component<Props, any> {
     constructor ( props: any ) {
@@ -29,20 +34,57 @@ export default class ModelTotalDevices extends Component<Props, any> {
 
 
     //TODO: click_Item
-    click_Item( item: any ) {
+    click_Item = async ( item: any ) => {
         Alert.alert(
             "Confirm",
             "Are you sure select " + item.deviceNo,
             [
                 {
                     text: 'Ok', onPress: () => {
-                        this.props.click_SelectItem( item.deviceNo );
+                        this.insertValues( item );
+
                     }
                 },
                 { text: 'Cancel', onPress: () => console.log( 'CANCEL: Email Error Response' ) }
             ],
             { cancelable: true }
         )
+    }
+
+    insertValues = async ( item: any ) => {
+        var date = Date.now();
+        let deviceContry = await DeviceInfo.getDeviceCountry();
+        let deviceId = await DeviceInfo.getDeviceId();
+        let deviceName = await DeviceInfo.getDeviceName();
+        let manufacture = await DeviceInfo.getManufacturer();
+        let model = await DeviceInfo.getModel();
+        var userDetial = [ {
+            deviceContry,
+            deviceId,
+            deviceName,
+            manufacture,
+            model
+        } ];
+        userDetial = JSON.stringify( userDetial ).toString();
+        var deviceInfo = [ item ];
+        deviceInfo = JSON.stringify( deviceInfo ).toString();
+        // console.log( { userDetial, deviceInfo } );
+        // console.log( apiary.insertDeviceUserInfo );
+        var body = {
+            date,
+            deviceInfo,
+            userInfo: userDetial,
+            idDeviceInfo: item.id
+        };
+        //        console.log( { body } );
+        axios
+            .post( apiary.insertDeviceUserInfo, body )
+            .then( response => {
+                let data = response.data;
+                console.log( { data } );
+            } )
+            .catch( error => { } );
+        this.props.click_SelectItem( item );
     }
 
 

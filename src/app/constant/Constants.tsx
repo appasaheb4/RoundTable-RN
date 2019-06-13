@@ -28,7 +28,8 @@ var asyncStorageKeys = {
 const domain = Config.API_DOMIN_ROUND_CMSHUAWEI;
 var apiary = {
   domain: domain,
-  getAllDevices: domain + Config.API_GETALLDEVICES
+  getAllDevices: domain + Config.API_GETALLDEVICES,
+  insertDeviceUserInfo: domain + Config.API_INSERTDEVICEUSERINFO,
 };
 
 

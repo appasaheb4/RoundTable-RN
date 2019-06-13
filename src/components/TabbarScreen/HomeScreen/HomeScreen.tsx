@@ -36,26 +36,25 @@ export default class HomeScreen extends Component<Props, any> {
         let resGetAllDevices = await ApiManager.getAllData( apiary.getAllDevices );
         console.log( { resGetAllDevices } );
         let selectDeiceInfo = await AsyncStorage.getItem( asyncStorageKeys.selectDeiceInfo );
-        if ( selectDeiceInfo == null && resGetAllDevices.length != 0 )
-            this.setState( {
-                arr_ModelTotalDevices: [
-                    {
-                        modalVisible: true,
-                        data: resGetAllDevices.data
-                    }
-                ]
-            } )
+        // if ( selectDeiceInfo == null && resGetAllDevices.length != 0 )
+        this.setState( {
+            arr_ModelTotalDevices: [
+                {
+                    modalVisible: true,
+                    data: resGetAllDevices.data
+                }
+            ]
+        } )
         const subscription = accelerometer.subscribe( ( { x, y, z } ) => {
-            console.log( { x, y, z } )
+            // console.log( { x, y, z } )
             this.setState( {
                 x, y, z
             } )
             if ( z <= 2 ) {
                 // this.socket.emit( 'videoPlay', 'Hello world!' );
-                console.log( 'call' );
-
+                //                console.log( 'call' );
             } else {
-                console.log( 'dont call' );
+                //  console.log( 'dont call' );
             }
         }
         );
@@ -70,7 +69,7 @@ export default class HomeScreen extends Component<Props, any> {
     click_SelectItem( item: any ) {
         AsyncStorage.setItem(
             asyncStorageKeys.selectDeiceInfo,
-            item
+            JSON.stringify( item )
         );
     }
 
@@ -81,7 +80,7 @@ export default class HomeScreen extends Component<Props, any> {
             <View style={ styles.container }>
                 <Text >{ "x : " + x + "\n y: " + y + "\n z: " + z }</Text>
                 <ModelTotalDevices data={ this.state.arr_ModelTotalDevices }
-                    click_SelectItem={ ( item ) => {
+                    click_SelectItem={ ( item: any ) => {
                         this.setState( {
                             arr_ModelTotalDevices: [
                                 {
