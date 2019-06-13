@@ -12,25 +12,31 @@ interface Props {
 }
 
 export default class ModelTotalDevices extends Component<Props, any> {
-
     constructor ( props: any ) {
         super( props );
         this.state = ( {
-            arr_DeviceInfo: [ "Device 1", "Device 2", "Device 3", "Device 4", "Device 5", "Device 6" ]
+            arr_DeviceInfo: []
         } )
-
-
     }
+
+
+    componentWillReceiveProps = async ( nextProps: any ) => {
+        let data = nextProps.data[ 0 ].data
+        this.setState( {
+            arr_DeviceInfo: data
+        } )
+    }
+
 
     //TODO: click_Item
     click_Item( item: any ) {
         Alert.alert(
             "Confirm",
-            "Are you sure select " + item,
+            "Are you sure select " + item.deviceNo,
             [
                 {
                     text: 'Ok', onPress: () => {
-                        this.props.click_SelectItem( item );
+                        this.props.click_SelectItem( item.deviceNo );
                     }
                 },
                 { text: 'Cancel', onPress: () => console.log( 'CANCEL: Email Error Response' ) }
@@ -38,6 +44,7 @@ export default class ModelTotalDevices extends Component<Props, any> {
             { cancelable: true }
         )
     }
+
 
     render() {
         let data = this.props.data.length != 0 ? this.props.data : [];
@@ -81,14 +88,14 @@ export default class ModelTotalDevices extends Component<Props, any> {
                                             <View style={ { flex: 1, backgroundColor: "#ffffff", borderRadius: 8, margin: 10 } }>
                                                 <View style={ { flex: 1, flexDirection: 'row', backgroundColor: "#ffffff", borderRadius: 8, } } >
                                                     <View style={ { flexDirection: "column", justifyContent: "center", flex: 1 } }>
-                                                        <Text style={ [ { marginLeft: 10, fontSize: 16 } ] }>{ item }</Text>
+                                                        <Text style={ [ { marginLeft: 10, fontSize: 16 } ] }>{ item.deviceNo }</Text>
                                                     </View>
                                                 </View>
                                             </View>
                                         </RkCard>
                                     </TouchableOpacity>
                                 ) }
-                                keyExtractor={ item => item }
+                                keyExtractor={ item => item.id }
                                 extraData={ this.state }
                             />
                         </View>
@@ -103,7 +110,6 @@ const styles = StyleSheet.create( {
     modalBackground: {
         flex: 1,
         justifyContent: 'center',
-
     },
     viewModelBody: {
         flex: 0.7,

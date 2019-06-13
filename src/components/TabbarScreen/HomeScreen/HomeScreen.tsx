@@ -15,7 +15,8 @@ var io = require( "socket.io-client/dist/socket.io" );
 import ModelTotalDevices from 'RoundTable/src/app/custcompontes/Model/ModelTotalDevices/ModelTotalDevices';
 
 //TODO:  Custome Object
-import { asyncStorageKeys } from "RoundTable/src/app/constant/Constants";
+import { apiary, asyncStorageKeys } from "RoundTable/src/app/constant/Constants";
+import ApiManager from "RoundTable/src/app/manager/ApiManager/ApiManager";
 
 
 interface Props { }
@@ -28,28 +29,29 @@ export default class HomeScreen extends Component<Props, any> {
             z: 0,
             arr_ModelTotalDevices: []
         } )
-        this.socket = io( 'http://round.cmshuawei.com:80', { jsonp: false } );
-
+        // this.socket = io( 'http://round.cmshuawei.com:80', { jsonp: false } );
     }
-    async componentDidMount() {
+
+    async componentWillMount() {
+        let resGetAllDevices = await ApiManager.getAllData( apiary.getAllDevices );
+        console.log( { resGetAllDevices } );
         let selectDeiceInfo = await AsyncStorage.getItem( asyncStorageKeys.selectDeiceInfo );
-        if ( selectDeiceInfo == null ) {
+        if ( selectDeiceInfo == null && resGetAllDevices.length != 0 )
             this.setState( {
                 arr_ModelTotalDevices: [
                     {
-                        modalVisible: true
+                        modalVisible: true,
+                        data: resGetAllDevices.data
                     }
                 ]
             } )
-        }
-
         const subscription = accelerometer.subscribe( ( { x, y, z } ) => {
             console.log( { x, y, z } )
             this.setState( {
                 x, y, z
             } )
             if ( z <= 2 ) {
-                this.socket.emit( 'videoPlay', 'Hello world!' );
+                // this.socket.emit( 'videoPlay', 'Hello world!' );
                 console.log( 'call' );
 
             } else {
@@ -60,9 +62,9 @@ export default class HomeScreen extends Component<Props, any> {
         setUpdateIntervalForType( SensorTypes.accelerometer, 1000 );
     }
 
-    emit() {
-        this.socket.send( "videoPlay" )
-    }
+    // emit() {
+    //     this.socket.send( "videoPlay" )
+    // }   
 
     //TODO:  click_SelectItem
     click_SelectItem( item: any ) {
@@ -83,7 +85,8 @@ export default class HomeScreen extends Component<Props, any> {
                         this.setState( {
                             arr_ModelTotalDevices: [
                                 {
-                                    modalVisible: false
+                                    modalVisible: false,
+                                    data: []
                                 }
                             ]
                         } )

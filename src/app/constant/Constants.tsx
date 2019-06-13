@@ -24,8 +24,24 @@ var asyncStorageKeys = {
   selectDeiceInfo: "selectDeiceInfo"
 }
 
+//Rest Full Api    
+const domain = Config.API_DOMIN_ROUND_CMSHUAWEI;
+var apiary = {
+  domain: domain,
+  getAllDevices: domain + Config.API_GETALLDEVICES
+};
+
+
+//Socket Url set
+var socketurl = {
+  socketUrlMain: Config.SOCKET_ROUND_CMSHUAWEI
+}
+
+
 export {
   colors,
   images,
-  asyncStorageKeys
+  asyncStorageKeys,
+  apiary,
+  socketurl
 };   
