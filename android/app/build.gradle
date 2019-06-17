@@ -102,17 +102,17 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    compileOptions {
+    compileOptions {  
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
+    }  
+  
     defaultConfig {
         applicationId "com.roundtable"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1  
-        versionName "1.0.0.050619"
+        versionCode 1     
+        versionName "1.0.0.170619"    
          missingDimensionStrategy 'react-native-camera', 'general' 
     }
     splits {  

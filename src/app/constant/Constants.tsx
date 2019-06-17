@@ -29,6 +29,7 @@ const domain = Config.API_DOMIN_ROUND_CMSHUAWEI;
 var apiary = {
   domain: domain,
   getAllDevices: domain + Config.API_GETALLDEVICES,
+  getRemainingDevice: domain + Config.API_GETREMAININGDEVICE,
   insertDeviceUserInfo: domain + Config.API_INSERTDEVICEUSERINFO,
 };
 

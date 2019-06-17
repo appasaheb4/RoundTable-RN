@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { Platform, StyleSheet, Text, View, AsyncStorage, Alert } from 'react-native';
 import {
     accelerometer,
     gyroscope,
@@ -29,22 +29,49 @@ export default class HomeScreen extends Component<Props, any> {
             z: 0,
             arr_ModelTotalDevices: []
         } )
-        // this.socket = io( 'http://round.cmshuawei.com:80', { jsonp: false } );
+        // this.socket = SocketIOClient( 'http://round.cmshuawei.com:80' );
+        // this.socket.on( "update", () => {
+        //     this.get_Data();
+        // } );
+    }
+
+    async  componentDidMount() {
+        var socket = io.connect( 'http://round.cmshuawei.com:80' );
+        var selectDeiceInfo = await AsyncStorage.getItem( asyncStorageKeys.selectDeiceInfo );
+        selectDeiceInfo = JSON.parse( selectDeiceInfo );
+        let temp = [ {
+            deviceNo: selectDeiceInfo.deviceNo
+        } ];
+        socket.emit( "videoPlay", temp );
     }
 
     async componentWillMount() {
-        let resGetAllDevices = await ApiManager.getAllData( apiary.getAllDevices );
-        console.log( { resGetAllDevices } );
+        var resGetAllDevices = await ApiManager.getAllData( apiary.getRemainingDevice );
+        resGetAllDevices = resGetAllDevices.data;
         let selectDeiceInfo = await AsyncStorage.getItem( asyncStorageKeys.selectDeiceInfo );
-        // if ( selectDeiceInfo == null && resGetAllDevices.length != 0 )
-        this.setState( {
-            arr_ModelTotalDevices: [
-                {
-                    modalVisible: true,
-                    data: resGetAllDevices.data
-                }
-            ]
-        } )
+        if ( resGetAllDevices.length == 0 ) {
+            Alert.alert(
+                "Ohh!",
+                "Please contact to admin.(All devies already used.)",
+                [
+                    {
+                        text: 'Ok', onPress: () => {
+                            console.log( 'ok' );
+                        }
+                    }
+                ],
+                { cancelable: true }
+            )
+        } else if ( resGetAllDevices.length != 0 && selectDeiceInfo == null ) {
+            this.setState( {
+                arr_ModelTotalDevices: [
+                    {
+                        modalVisible: true,
+                        data: resGetAllDevices
+                    }
+                ]
+            } )
+        }
         const subscription = accelerometer.subscribe( ( { x, y, z } ) => {
             // console.log( { x, y, z } )
             this.setState( {
