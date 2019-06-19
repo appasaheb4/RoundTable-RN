@@ -2,14 +2,12 @@ package com.roundtable;
 
 import android.app.Application;
 
-import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
-import io.fabric.sdk.android.Fabric;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.sensors.RNSensorsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -17,9 +15,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
-import java.util.List;  
-// import com.crashlytics.android.Crashlytics;
-// import io.fabric.sdk.android.Fabric;
+import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -33,11 +29,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNDeviceInfo(),
+            new RNGestureHandlerPackage(),
             new VectorIconsPackage(),
             new RNSensorsPackage(),
             new LinearGradientPackage(),
-            new RNGestureHandlerPackage(),
+            new RNDeviceInfo(),
             new ReactNativeConfigPackage()
       );
     }
@@ -56,8 +52,6 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    Fabric.with(this, new Crashlytics());
-   //Fabric.with(this, new Crashlytics());
     SoLoader.init(this, /* native exopackage */ false);
   }
 }

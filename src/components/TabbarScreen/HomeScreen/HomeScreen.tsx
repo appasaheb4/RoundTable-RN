@@ -36,13 +36,8 @@ export default class HomeScreen extends Component<Props, any> {
     }
 
     async  componentDidMount() {
-        var socket = io.connect( 'http://round.cmshuawei.com:80' );
-        var selectDeiceInfo = await AsyncStorage.getItem( asyncStorageKeys.selectDeiceInfo );
-        selectDeiceInfo = JSON.parse( selectDeiceInfo );
-        let temp = [ {
-            deviceNo: selectDeiceInfo.deviceNo
-        } ];
-        socket.emit( "videoPlay", temp );
+
+
     }
 
     async componentWillMount() {
@@ -72,34 +67,45 @@ export default class HomeScreen extends Component<Props, any> {
                 ]
             } )
         }
-        const subscription = accelerometer.subscribe( ( { x, y, z } ) => {
-            // console.log( { x, y, z } )
-            this.setState( {
-                x, y, z
-            } )
-            if ( z <= 2 ) {
-                // this.socket.emit( 'videoPlay', 'Hello world!' );
-                //                console.log( 'call' );
-            } else {
-                //  console.log( 'dont call' );
-            }
-        }
-        );
-        setUpdateIntervalForType( SensorTypes.accelerometer, 1000 );
+        var socket = io.connect( 'http://round.cmshuawei.com:80' );
+        selectDeiceInfo = JSON.parse( selectDeiceInfo );
+        let temp = [ {
+            deviceNo: selectDeiceInfo.deviceNo
+        } ];
+        console.log( { temp } );
+        this.sessionValueShow( temp );
     }
-
-    // emit() {
-    //     this.socket.send( "videoPlay" )
-    // }   
-
     //TODO:  click_SelectItem
     click_SelectItem( item: any ) {
         AsyncStorage.setItem(
             asyncStorageKeys.selectDeiceInfo,
             JSON.stringify( item )
         );
+        let selectDeiceInfo = JSON.parse( item );
+        let temp = [ {
+            deviceNo: selectDeiceInfo.deviceNo
+        } ];
+        this.sessionValueShow( temp );
     }
 
+    sessionValueShow( temp: any ) {
+        console.log( { temp } );
+        var socket = io.connect( 'http://round.cmshuawei.com:80' );
+        const subscription = accelerometer.subscribe( ( { x, y, z } ) => {
+            // console.log( { x, y, z } )
+            this.setState( {
+                x, y, z
+            } )
+            if ( z <= 2 ) {
+                console.log( { temp } );
+                socket.emit( "videoPlay", temp );
+            } else {
+                socket.emit( "stopPlay", temp );
+            }
+        }
+        );
+        setUpdateIntervalForType( SensorTypes.accelerometer, 1000 );
+    }
 
     render() {
         let { x, y, z } = this.state;
