@@ -66,22 +66,24 @@ export default class HomeScreen extends Component<Props, any> {
                     }
                 ]
             } )
+        } else {
+            selectDeiceInfo = JSON.parse( selectDeiceInfo );
+            console.log( { selectDeiceInfo } );
+            let temp = [ {
+                deviceNo: selectDeiceInfo.deviceNo
+            } ];
+            this.sessionValueShow( temp );
         }
-        var socket = io.connect( 'http://round.cmshuawei.com:80' );
-        selectDeiceInfo = JSON.parse( selectDeiceInfo );
-        let temp = [ {
-            deviceNo: selectDeiceInfo.deviceNo
-        } ];
-        console.log( { temp } );
-        this.sessionValueShow( temp );
     }
+
     //TODO:  click_SelectItem
     click_SelectItem( item: any ) {
         AsyncStorage.setItem(
             asyncStorageKeys.selectDeiceInfo,
             JSON.stringify( item )
         );
-        let selectDeiceInfo = JSON.parse( item );
+        console.log( { item } );
+        let selectDeiceInfo = item;
         let temp = [ {
             deviceNo: selectDeiceInfo.deviceNo
         } ];
@@ -92,14 +94,14 @@ export default class HomeScreen extends Component<Props, any> {
         console.log( { temp } );
         var socket = io.connect( 'http://round.cmshuawei.com:80' );
         const subscription = accelerometer.subscribe( ( { x, y, z } ) => {
-            // console.log( { x, y, z } )
             this.setState( {
                 x, y, z
             } )
-            if ( z <= 2 ) {
-                console.log( { temp } );
+            if ( z < 3 ) {
+                console.log( { up: temp } );
                 socket.emit( "videoPlay", temp );
             } else {
+                console.log( { down: temp } );
                 socket.emit( "stopPlay", temp );
             }
         }

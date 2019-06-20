@@ -19,13 +19,7 @@ interface Props {
 }
 
 export default class LaunchingScreen extends Component<Props, any> {
-    constructor ( props: any ) {
-        super( props );
-        this.state = ( {
-            centerLogo: null,
-            centerLogoOpticy: new Animated.Value( 0 )
-        } )
-    }
+
 
     async componentDidMount() {
         let value = await AsyncStorage.getItem( asyncStorageKeys.flag_Pincode );
@@ -38,11 +32,6 @@ export default class LaunchingScreen extends Component<Props, any> {
                 this.props.onComplited( false, "ConfirmPasscodeNavigator" );
             }
         }, 1000 );
-        Animated.timing( this.state.centerLogoOpticy, {
-            toValue: 1,
-            duration: 100,
-            easing: Easing.bounce
-        } ).start();
     }
 
     render() {
@@ -65,8 +54,7 @@ export default class LaunchingScreen extends Component<Props, any> {
 
 const styles = StyleSheet.create( {
     container: {
-        flex: 1,
-        backgroundColor: "#ffffff"
+        flex: 1
     },
     backgroundImage: {
         flex: 1,

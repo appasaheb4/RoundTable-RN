@@ -101,7 +101,7 @@ export default class ConfirmPasscodeScreen extends Component<any, any> {
     render() {
         return (
             <View style={ styles.container }>
-                {/* <CustomeStatusBar backgroundColor={ colors.white } flagShowStatusBar={ true } barStyle="dark-content" /> */ }
+
                 <KeyboardAwareScrollView
                     enableOnAndroid
                     extraScrollHeight={ 40 }
@@ -193,7 +193,6 @@ export default class ConfirmPasscodeScreen extends Component<any, any> {
                         />
                     </View>
                 </KeyboardAwareScrollView>
-                {/* <Loader loading={ this.state.isLoading } color={ colors.appColor } size={ 30 } /> */ }
             </View>
         );
     }
