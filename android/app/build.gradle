@@ -112,8 +112,8 @@ android {
         applicationId "com.roundtable"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1   
-        versionName "1.0.0.200619"   
+        versionCode 1      
+        versionName "1.0.0.060719"   
     }
      signingConfigs {
 release {
